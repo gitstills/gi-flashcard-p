@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Flashcard App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+        }
+        .flashcard {
+            width: 300px;
+            height: 200px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .flashcard p {
+            font-size: 18px;
+            padding: 20px;
+        }
+        button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="flashcard" class="flashcard">
+            <p id="content">Click to reveal the answer</p>
+        </div>
+        <div>
+            <button onclick="previousCard()">Previous</button>
+            <button onclick="nextCard()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const flashcards = [
+            { question: "What is the capital of France?", answer: "Paris" },
+            { question: "What is 2 + 2?", answer: "4" },
+            { question: "Who wrote 'Romeo and Juliet'?", answer: "William Shakespeare" }
+        ];
+
+        let currentCard = 0;
+        let showingQuestion = true;
+
+        function updateCard() {
+            const card = flashcards[currentCard];
+            document.getElementById('content').textContent = showingQuestion ? card.question : card.answer;
+        }
+
+        document.getElementById('flashcard').addEventListener('click', function() {
+            showingQuestion = !showingQuestion;
+            updateCard();
+        });
+
+        function nextCard() {
+            currentCard = (currentCard + 1) % flashcards.length;
+            showingQuestion = true;
+            updateCard();
+        }
+
+        function previousCard() {
+            currentCard = (currentCard - 1 + flashcards.length) % flashcards.length;
+            showingQuestion = true;
+            updateCard();
+        }
+
+        updateCard();
+    </script>
+</body>
+</html>
